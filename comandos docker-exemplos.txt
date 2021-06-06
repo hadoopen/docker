@@ -1,0 +1,225 @@
+rodar imagem
+docker run ubuntu
+
+rodar imagem com versão
+docker run ubuntu:latest
+
+
+listar containers rodando
+docker ps
+
+listar todos todos os containers, mesmo os parados
+docker ps -a
+
+
+rodar um container e executar um comando
+docker run ubuntu echo "Ola Mundo"
+
+
+rodar container e iniciar o terminal do container
+docker run -it ubuntu
+
+
+Iniciar container parado ( 05025384675e -> id da imagem)
+docker start 05025384675e
+
+
+parar container ( 05025384675e-> id da imagem)
+docker stop 05025384675e
+
+
+
+remover container
+docker rm c9f83bfb82a8
+
+
+
+remover containers parados de uma vez só
+docker container prune
+
+
+listar imagens
+docker images
+
+remover imagens
+docker rmi hello-world
+
+
+rodar container de determinado repositório
+docker run dockersamples/static-site
+
+
+rodar container de determinado repositório sem travar o terminal
+docker run -d dockersamples/static-site
+
+roda container linkando com uma porta local
+docker run -d -P dockersamples/static-site
+
+rodar container com mongo
+docker pull mongo
+
+
+lista as portas de um container
+sudo docker port 989e4d7d3638
+443/tcp -> 0.0.0.0:9000
+80/tcp -> 0.0.0.0:9001
+
+
+roda container com um nome
+docker run -d -P --name meu-site dockersamples/static-site
+
+
+para container com nome
+docker stop meu-site
+
+
+rodar container mapeando porta
+docker run -d -p 12345:80 dockersamples/static-site
+
+
+roda container passando variável de ambiente AUTHOR
+docker run -d -P -e AUTHOR="Douglas Q" dockersamples/static-site
+
+
+para todos os container de uma só vez
+docker stop $(docker ps -q)
+
+
+para todos os container diminuindo o tempo de espera padrão de 10 segundos
+docker stop -t 0 $(docker ps -q)
+
+
+
+rodar container criando um volume ( um diretório dentro do container )
+docker run -v "/var/www" ubuntu
+
+rodar container criadno um volume e mapeando para diretório da maquina local
+docker run -it -v "C:\Users\Alura\Desktop:/var/www" ubuntu
+
+
+lista as configurações de um container
+docker inspect 8cf7b40ce226
+
+
+
+
+
+==== CRAIR DOCKER FILE
+#Salvar arquivo com o nome como node.dockerfile ou somente Dockerfile
+
+FROM node:latest
+MAINTAINER Douglas Quintanilha
+ENV PORT=3000
+COPY . /var/www
+WORKDIR /var/www
+RUN npm install
+ENTRYPOINT npm start
+EXPOSE $PORT
+==== CRAIR DOCKER FILE
+
+==== Buidar a imagem ====
+docker build -f Dockerfile
+
+==== Buidar a imagem e adicionar tag ====
+docker build -f Dockerfile -t douglasq/node
+
+==== Buidar a imagem e adicionar tag e passar o caminho de onde está o arquivo (nesse caso, no mesmo diretório)====
+docker build -f Dockerfile -t douglasq/node .
+
+
+enviar imagem para o dockerhub
+docker push douglasq/node
+
+
+baixar imagem do docker hub (o pull só baixa, não executa)
+docker pull douglasq/node
+
+
+=== REDE ===
+Baixando imagem ubuntu
+ docker run -it ubuntu
+
+mostrando o 
+ ip hostname -i
+
+instalando o ping
+ apt-get update && apt-get install iputils-ping
+
+Criando rede comunicação entre as redes
+ docker network create --driver bridge minha-rede
+
+Listando redes
+docker network ls
+
+mostra as configurações da rede 
+docker netowrk inspect minha-rede
+
+
+rodando o container usando a rede criada
+ docker run -it --name meu-container-de-ubuntu --network minha-rede ubuntu
+
+
+
+==Instalar docker-compose se não tiver
+sudo curl -L https://github.com/docker/compose/releases/download/1.15.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+
+
+====DOCKER COMPOSE ====
+Construir as imagens do programas dos projeto e conectadas na mesma rede com docker compose(Necessário estar no mesmo diretório do arquivo docker-compose.yml e possuir os docker files e configs se necessário)
+ sudo docker-compose build
+
+
+Rodar os container com docker compose
+ docker-compose up -d
+
+
+testar comunicação inmagens docker compose com o nome dos containers
+ docker exec -it alura-books-1 ping alura-books-2
+
+testar comunicação inmagens docker compose com o nome dos serviços
+ docker exec -it alura-books-1 ping node2
+
+
+parar os containers(serviços)
+ docker-compose down
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

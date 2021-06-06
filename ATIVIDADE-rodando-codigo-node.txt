@@ -1,0 +1,21 @@
+
+instalar imagem node
+docker run node
+
+
+rodar comando para mapear volume para diretório local
+docker run -v "C:\Users\Alura\Desktop\volume-exemplo:/var/www" node
+
+
+iniciar container com node mapeando uma porta e volume (obs, não vai funcionar o site pq não está no work directory)
+docker run -p 8080:3000 -v "C:\Users\Alura\Desktop\volume-exemplo:/var/www" node npm start
+
+iniciar container com node mapeando uma porta e volume agora com work directory, testar no localhost:8080 o site
+docker run -p 8080:3000 -v "C:\Users\Alura\Desktop\volume-exemplo:/var/www" -w "/var/www" node npm start
+
+
+Melhorando o comando
+cd Desktop/volume-exemplo/
+docker run -p 8080:3000 -v "$(pwd):/var/www" -w "/var/www" node npm start
+
+

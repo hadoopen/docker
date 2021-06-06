@@ -1,0 +1,41 @@
+rodando primeiro container ubuntu
+docker run -it ubuntu
+
+listando o ip do primeiro container
+hostname -i
+ 
+instalando piing no primeiro container
+apt-get update && apt-get install iputils-ping
+
+
+rodando segundo container ubuntu
+docker run -it ubuntu
+
+listando o ip do segundo container
+hostname -i
+
+instalando piing no segundo container
+apt-get update && apt-get install iputils-ping
+
+
+==OBS===
+ A comunicação do ping só funciona via ip não pelo nome da imagem pois os ips do docker são dinamicos,
+então precisamos criar uma rede
+
+
+Criadno rede
+ docker network create --driver bridge minha-rede
+
+rodando priemrio container usando a rede
+docker run -it --name meu-container-de-ubuntu --network minha-rede ubuntu
+
+rodando segundo container usando a rede
+docker run -it --name segundo-ubuntu --network minha-rede ubuntu
+
+A partir do segundo container pingar o primeiro container
+ping meu-container-de-ubuntu
+
+
+
+
+

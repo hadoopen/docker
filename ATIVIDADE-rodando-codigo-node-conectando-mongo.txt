@@ -1,0 +1,19 @@
+Baixando imagens
+docker pull douglasq/alura-books:cap05
+docker pull mongo
+
+
+Rodando container com aplicação
+docker run -d -p 8080:3000 douglasq/alura-books:cap05
+
+--Se não tiver a rede criada
+Criando rede comunicação entre as redes
+ docker network create --driver bridge minha-rede
+
+
+Rodando container com mongodb
+docker run -d --name meu-mongo --network minha-rede mongo
+
+
+Rodandno aplicação na mesma rede do mongodb (derrubar o container com a aplicação antes)
+docker run --network minha-rede -d -p 8080:3000 douglasq/alura-books:cap05
